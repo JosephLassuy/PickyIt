@@ -1,0 +1,15 @@
+name: PickyIt
+
+services:
+  crdb:
+    image: cockroachdb/cockroach:v24.2.1-fips
+    pull_policy: "always"
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - cockroach:/cockroach/cockroach-data
+      - ./migration:/migration
+volumes:
+  cockroach:
