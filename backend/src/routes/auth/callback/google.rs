@@ -64,9 +64,9 @@ pub struct AuthRequest {
 #[derive(Debug, Deserialize)]
 struct GoogleUserInfo {
     email: String,
-    given_name: String,
-    family_name: String,
-    sub: String,
+    given_name: Option<String>,
+    family_name: Option<String>,
+    sub: Option<String>,
 }
 
 pub async fn google_callback(
