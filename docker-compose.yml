@@ -1,15 +1,15 @@
 name: PickyIt
 
 services:
-  crdb:
-    image: cockroachdb/cockroach:v24.2.1-fips
-    pull_policy: "always"
-    command: start-single-node --insecure
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "26257:26257"
-      - "8080:8080"
-    volumes:
-      - cockroach:/cockroach/cockroach-data
-      - ./migration:/migration
-volumes:
-  cockroach:
+      - "3000:3000"
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
