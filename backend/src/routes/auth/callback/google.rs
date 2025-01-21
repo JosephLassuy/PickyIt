@@ -24,6 +24,9 @@ pub fn create_google_oauth_client() -> BasicClient {
     let google_client_secret =
         std::env::var("GOOGLE_CLIENT_SECRET").expect("Missing GOOGLE_CLIENT_SECRET");
     let redirect_url = std::env::var("GOOGLE_REDIRECT_URL").expect("Missing GOOGLE_REDIRECT_URL");
+    println!("GOOGLE_CLIENT_ID: {}", google_client_id);
+    println!("GOOGLE_CLIENT_SECRET: {}", google_client_secret);
+    println!("GOOGLE_REDIRECT_URL: {}", redirect_url);
 
     let client = BasicClient::new(
         ClientId::new(google_client_id),
@@ -77,6 +80,7 @@ pub async fn google_callback(
         .request_async(async_http_client)
         .await
         .map_err(|e| {
+            println!("Detailed error: {:?}", e);
             (
                 axum::http::StatusCode::INTERNAL_SERVER_ERROR,
                 format!("Failed to exchange code: {}", e),
