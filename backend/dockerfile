@@ -25,9 +25,10 @@ RUN cargo build --release --jobs $(nproc)
 
 FROM debian:bookworm-slim
 
-# Install OpenSSL runtime library
+# Install OpenSSL runtime library and CA certificates
 RUN apt-get update && apt-get install -y \
     libssl3 \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/src/app/target/release/backend /usr/local/bin/
