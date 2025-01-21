@@ -112,8 +112,10 @@ pub async fn google_callback(
         Ok(user) => user,
         Err(_) => User::create(
             &state,
-            user_info.given_name,
-            user_info.family_name,
+            user_info
+                .given_name
+                .unwrap_or_else(|| "Unknown".to_string()),
+            user_info.family_name.unwrap_or_else(|| "".to_string()),
             &user_info.email,
         )
         .await
